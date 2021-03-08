@@ -1,7 +1,7 @@
 ## PROCESS LSMS AND DHS DATA ##
 
 #### Preliminaries: Load packages, create new folders, define aggregation functions ####
-setwd('predicting-poverty') # Set working directory to where you downloaded the replication folder
+# setwd('predicting-poverty') # Set working directory to where you downloaded the replication folder
 rm(list=ls())
 library(magrittr)
 library(foreign)
@@ -110,11 +110,11 @@ write.table(cluster(tza13.vars), 'data/output/LSMS/Tanzania 2013 LSMS (Cluster).
 mwi13.cons <- read.dta('data/input/LSMS/MWI_2013_IHPS_v01_M_STATA/Round 2 (2013) Consumption Aggregate.dta') %$%
   data.frame(hhid = y2_hhid, cons = rexpagg/(365*adulteq), weight = hhweight)
 mwi13.cons$cons <- mwi13.cons$cons*107.62/(116.28*166.12)
-mwi13.geo <- read.dta('data/input/LSMS/MWI_2013_IHPS_v01_M_STATA/Geovariables/HouseholdGeovariables_IHPS.dta')
+mwi13.geo <- read.dta('data/input/LSMS/MWI_2013_IHPS_v01_M_STATA/HouseholdGeovariables_IHPS_13.dta')
 mwi13.coords <- data.frame(hhid = mwi13.geo$y2_hhid, lat = mwi13.geo$LAT_DD_MOD, lon = mwi13.geo$LON_DD_MOD)
-mwi13.hha <- read.dta('data/input/LSMS/MWI_2013_IHPS_v01_M_STATA/Household/HH_MOD_A_FILT.dta')
+mwi13.hha <- read.dta('data/input/LSMS/MWI_2013_IHPS_v01_M_STATA/HH_MOD_A_FILT_13.dta')
 mwi13.rururb <- data.frame(hhid = mwi13.hha$y2_hhid, rururb = mwi13.hha$baseline_rural, stringsAsFactors = F)
-mwi13.hhf <- read.dta('data/input/LSMS/MWI_2013_IHPS_v01_M_STATA/Household/HH_MOD_F.dta')
+mwi13.hhf <- read.dta('data/input/LSMS/MWI_2013_IHPS_v01_M_STATA/HH_MOD_F_13.dta')
 mwi13.room <- data.frame(hhid = mwi13.hhf$y2_hhid, room = mwi13.hhf$hh_f10)
 mwi13.metal <- data.frame(hhid = mwi13.hhf$y2_hhid, metal = mwi13.hhf$hh_f10=='IRON SHEETS')
 
@@ -126,8 +126,9 @@ write.table(mwi13.vars, 'data/output/LSMS/Malawi 2013 LSMS (Household).txt', row
 write.table(cluster(mwi13.vars), 'data/output/LSMS/Malawi 2013 LSMS (Cluster).txt', row.names = F)
 
 ## Nigeria ##
-nga13.cons <- read.dta('data/input/LSMS/DATA/cons_agg_w2.dta') %$%
-  data.frame(hhid = hhid, cons = pcexp_dr_w2/365)
+# EDIT to include cons_agg_wave2_visit2.dta
+nga13.cons <- read.dta('data/input/LSMS/DATA/cons_agg_wave2_visit2.dta') %$%
+  data.frame(hhid = hhid, cons = totcons/365)
 nga13.cons$cons <- nga13.cons$cons*110.84/(79.53*100)
 nga13.geo <- read.dta('data/input/LSMS/DATA/Geodata Wave 2/NGA_HouseholdGeovars_Y2.dta')
 nga13.coords <- data.frame(hhid = nga13.geo$hhid, lat = nga13.geo$LAT_DD_MOD, lon = nga13.geo$LON_DD_MOD)

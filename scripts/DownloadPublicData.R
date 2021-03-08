@@ -3,7 +3,7 @@
 # Jan 2017: Removed references to elevation data which had become restricted #
 # Mar 2017: NOAA changed URL of hosted files #
 
-setwd('predicting-poverty') # Set working directory to where you downloaded the replication folder
+# setwd('predicting-poverty') # Set working directory to where you downloaded the replication folder
 rm(list=ls())
 library(R.utils)
 
